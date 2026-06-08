@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UGC 创作者成长任务 · Demo</title>
+<style>
+  :root{
+    --ink:#1d1d1f;--ink-2:#6e6e73;--ink-3:#a1a1a6;
+    --line:rgba(0,0,0,.08);--line-2:rgba(0,0,0,.05);
+    --blue:#0a84ff;--blue-soft:#eaf3ff;--green:#34c759;--amber:#ff9f0a;--purple:#6e5cff;--pink:#ff375f;
+    --glass:rgba(255,255,255,.72);
+    --shadow-s:0 1px 2px rgba(0,0,0,.05),0 6px 16px rgba(0,0,0,.06);
+    --shadow-m:0 10px 34px rgba(0,0,0,.12);
+    --font:-apple-system,"SF Pro Display","PingFang SC","Helvetica Neue",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  body{margin:0;min-height:100vh;font-family:var(--font);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;padding:34px 18px;
+    background:radial-gradient(900px 500px at 22% -8%,#2a2a33 0,transparent 60%),
+      radial-gradient(800px 520px at 110% 120%,#20202a 0,transparent 55%),
+      linear-gradient(160deg,#0c0c10,#101015);}
+
+  .device{position:relative;width:896px;height:426px;border-radius:46px;
+    background:linear-gradient(145deg,#2a2a2e,#0e0e10);padding:13px;
+    box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.05) inset;}
+  .device::before,.device::after{content:"";position:absolute;background:#0b0b0d;border-radius:6px;}
+  .device::before{right:-3px;top:120px;width:4px;height:54px;}
+  .device::after{left:-3px;top:96px;width:4px;height:40px;box-shadow:0 56px 0 #0b0b0d;}
+
+  .screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;
+    background:linear-gradient(180deg,#fbfbfd,#f3f4f7);display:flex;flex-direction:column;}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:23px;
+    background:#0b0b0d;border-radius:0 0 16px 16px;z-index:30;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .notch .cam{width:7px;height:7px;border-radius:50%;background:#23232a;}
+  .notch .spk{width:34px;height:4px;border-radius:3px;background:#1b1b20;}
+
+  /* top */
+  .topbar{flex:0 0 auto;height:52px;display:flex;align-items:center;gap:12px;padding:0 20px 0 58px;
+    background:var(--glass);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line-2);z-index:20;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand .logo{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;
+    background:linear-gradient(140deg,#0a84ff,#5e9dff);box-shadow:0 4px 10px rgba(10,132,255,.35);}
+  .brand .t{font-size:14px;font-weight:700;}
+  .brand .s{font-size:10px;color:var(--ink-3);margin-top:1px;}
+  .spacer{flex:1;}
+  .pill{display:flex;align-items:center;gap:6px;height:29px;padding:0 11px;border-radius:30px;background:#fff;
+    border:1px solid var(--line);box-shadow:var(--shadow-s);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .pill .d{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#fff;}
+  .d.g{background:linear-gradient(140deg,#ffb43d,#ff8a00);}
+  .d.b{background:linear-gradient(140deg,#0a84ff,#6e5cff);}
+  .avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;
+    background:linear-gradient(140deg,#6e5cff,#a07bff);box-shadow:var(--shadow-s);}
+
+  /* body */
+  .main{flex:1;display:flex;min-height:0;}
+
+  /* left rail */
+  .rail{flex:0 0 200px;padding:16px 14px;border-right:1px solid var(--line-2);
+    display:flex;flex-direction:column;gap:9px;background:rgba(255,255,255,.4);}
+  .rail .head{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.6px;text-transform:uppercase;margin:2px 4px 4px;}
+  .stage{position:relative;display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:15px;cursor:pointer;
+    transition:.25s cubic-bezier(.4,0,.2,1);border:1px solid transparent;}
+  .stage:hover{background:#fff;box-shadow:var(--shadow-s);}
+  .stage.active{background:#fff;border-color:var(--line);box-shadow:var(--shadow-m);}
+  .stage .ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:16px;flex:0 0 auto;
+    background:#f0f1f4;transition:.25s;}
+  .stage.active .ico{background:linear-gradient(140deg,#0a84ff,#6e5cff);box-shadow:0 6px 14px rgba(10,132,255,.3);}
+  .stage .nm{font-size:13px;font-weight:700;line-height:1.2;}
+  .stage .st{font-size:10.5px;color:var(--ink-3);margin-top:2px;}
+  .stage.done .nm::after{content:" ✓";color:var(--green);font-size:11px;}
+  .stage.lock{opacity:.5;}
+  .stage.lock .nm::after{content:" 🔒";font-size:10px;filter:grayscale(1);}
+
+  /* center */
+  .content{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .ctitle{padding:15px 22px 8px;}
+  .ctitle h2{margin:0;font-size:18px;font-weight:800;letter-spacing:-.3px;}
+  .ctitle .sub{font-size:11.5px;color:var(--ink-2);margin-top:3px;}
+  .prog{display:flex;align-items:center;gap:10px;margin-top:11px;}
+  .bar{flex:1;height:7px;border-radius:7px;background:#e7e8ec;overflow:hidden;}
+  .bar i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,#0a84ff,#6e5cff);transition:width .6s cubic-bezier(.4,0,.2,1);}
+  .prog b{font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;}
+
+  .tasks{flex:1;overflow-y:auto;padding:6px 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px;align-content:start;}
+  .tasks::-webkit-scrollbar{width:7px;}
+  .tasks::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14);border-radius:7px;}
+  .card{background:#fff;border:1px solid var(--line-2);border-radius:var(--r-md,18px);padding:13px 14px;
+    box-shadow:var(--shadow-s);display:flex;flex-direction:column;gap:9px;transition:.25s;}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-m);}
+  .card .top{display:flex;align-items:flex-start;gap:10px;}
+  .card .ti{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:17px;flex:0 0 auto;background:var(--blue-soft);}
+  .card .tx{flex:1;min-width:0;}
+  .card .tt{font-size:13.5px;font-weight:700;line-height:1.25;}
+  .card .dd{font-size:11px;color:var(--ink-2);margin-top:3px;line-height:1.4;}
+  .badge{flex:0 0 auto;font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;}
+  .b-ok{background:rgba(52,199,89,.12);color:#1f9e44;}
+  .b-go{background:rgba(10,132,255,.12);color:#0a84ff;}
+  .b-wait{background:rgba(255,159,10,.14);color:#cf7d00;}
+  .b-lock{background:#f0f1f4;color:#9a9aa0;}
+  .sbar{height:6px;border-radius:6px;background:#eef0f3;overflow:hidden;}
+  .sbar i{display:block;height:100%;background:linear-gradient(90deg,#34c759,#5fd87d);transition:width .6s;}
+  .crow{display:flex;align-items:center;justify-content:space-between;}
+  .reward{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--amber);}
+  .btn{border:0;cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;padding:7px 15px;border-radius:11px;
+    color:#fff;background:linear-gradient(140deg,#0a84ff,#3a9bff);box-shadow:0 6px 14px rgba(10,132,255,.3);transition:.2s;}
+  .btn:hover{filter:brightness(1.05);transform:translateY(-1px);}
+  .btn:active{transform:scale(.95);}
+  .btn.claimed{background:#eef0f3;color:#9a9aa0;box-shadow:none;cursor:default;}
+  .btn.claimed:hover{transform:none;filter:none;}
+  .btn.disabled{background:#f0f1f4;color:#bcbcc2;box-shadow:none;cursor:not-allowed;}
+  .btn.ghost{background:#fff;color:var(--ink-2);border:1px solid var(--line);box-shadow:none;}
+
+  /* right reward panel */
+  .reward-page{flex:1;overflow-y:auto;padding:16px 20px;display:none;}
+  .grand{border-radius:20px;padding:18px;color:#fff;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#6e5cff,#a07bff);box-shadow:0 14px 30px rgba(110,92,255,.35);}
+  .grand::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.16);}
+  .grand .k{font-size:11px;opacity:.85;font-weight:600;letter-spacing:.5px;}
+  .grand .v{font-size:22px;font-weight:800;margin-top:4px;}
+  .grand .ds{font-size:11.5px;opacity:.9;margin-top:6px;line-height:1.5;}
+  .rlist{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ritem{background:#fff;border:1px solid var(--line-2);border-radius:15px;padding:13px;box-shadow:var(--shadow-s);display:flex;gap:10px;align-items:center;}
+  .ritem .ri{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--blue-soft);}
+  .ritem .rt{font-size:12.5px;font-weight:700;}
+  .ritem .rs{font-size:10.5px;color:var(--ink-2);margin-top:2px;}
+
+  /* profile page */
+  .profile{flex:1;overflow-y:auto;padding:18px 22px;display:none;flex-direction:column;gap:14px;}
+  .pf-hd{display:flex;align-items:center;gap:14px;}
+  .pf-av{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;
+    background:linear-gradient(140deg,#6e5cff,#a07bff);box-shadow:var(--shadow-m);}
+  .pf-nm{font-size:18px;font-weight:800;}
+  .pf-tag{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;font-weight:700;color:#0a84ff;
+    background:var(--blue-soft);padding:3px 10px;border-radius:20px;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .stat{background:#fff;border:1px solid var(--line-2);border-radius:15px;padding:13px;box-shadow:var(--shadow-s);text-align:center;}
+  .stat .n{font-size:19px;font-weight:800;letter-spacing:-.5px;}
+  .stat .l{font-size:10.5px;color:var(--ink-2);margin-top:3px;}
+
+  /* bottom nav */
+  .nav{flex:0 0 auto;height:50px;display:flex;align-items:center;justify-content:space-around;padding:0 30px;
+    background:var(--glass);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line-2);}
+  .nav button{border:0;background:none;cursor:pointer;font-family:var(--font);display:flex;flex-direction:column;align-items:center;gap:2px;
+    color:var(--ink-3);font-size:10px;font-weight:600;transition:.2s;padding:4px 10px;border-radius:12px;}
+  .nav button .ni{font-size:18px;line-height:1;}
+  .nav button.active{color:var(--blue);}
+  .nav button:hover{color:var(--ink);}
+
+  /* toast */
+  .toast{position:absolute;top:62px;left:50%;transform:translateX(-50%) translateY(-14px);z-index:40;
+    background:rgba(28,28,30,.92);backdrop-filter:blur(10px);color:#fff;padding:9px 18px;border-radius:30px;font-size:12.5px;font-weight:600;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:8px;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast .ck{width:18px;height:18px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:11px;}
+
+  .hint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:11.5px;letter-spacing:.3px;}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="screen">
+      <div class="notch"><span class="cam"></span><span class="spk"></span></div>
+      <div class="toast" id="toast"><span class="ck">✓</span><span id="toastTxt">已领取奖励</span></div>
+
+      <!-- top -->
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">UGC</div>
+          <div><div class="t">创作者成长</div><div class="s">Creator Journey</div></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="pill"><span class="d g">★</span><b id="starVal">1,250</b></div>
+        <div class="pill"><span class="d b">◈</span><b>320</b></div>
+        <div class="avatar">创</div>
+      </div>
+
+      <!-- main -->
+      <div class="main">
+        <!-- left rail -->
+        <aside class="rail">
+          <div class="head">成长阶段</div>
+          <div class="stage done" data-stage="0"><div class="ico">🤝</div><div><div class="nm">入驻建联</div><div class="st">已完成</div></div></div>
+          <div class="stage active" data-stage="1"><div class="ico">🚀</div><div><div class="nm">星手上路</div><div class="st">进行中 · 2/4</div></div></div>
+          <div class="stage" data-stage="2"><div class="ico">✨</div><div><div class="nm">新星闪耀</div><div class="st">待开启</div></div></div>
+          <div class="stage lock" data-stage="3"><div class="ico">👑</div><div><div class="nm">王牌创作</div><div class="st">未解锁</div></div></div>
+          <div class="stage lock" data-stage="4"><div class="ico">💎</div><div><div class="nm">精英合伙人</div><div class="st">未解锁</div></div></div>
+        </aside>
+
+        <!-- center / pages -->
+        <section class="content">
+          <!-- TASKS PAGE -->
+          <div id="page-tasks" style="display:flex;flex-direction:column;flex:1;min-height:0;">
+            <div class="ctitle">
+              <h2 id="stageTitle">星手上路</h2>
+              <div class="sub" id="stageSub">发布你的首个 UGC 玩法，完成官方建联与基础学习。</div>
+              <div class="prog"><div class="bar"><i id="stageBar" style="width:50%"></i></div><b id="stagePct">50%</b></div>
+            </div>
+            <div class="tasks" id="taskGrid"></div>
+          </div>
+
+          <!-- REWARD PAGE -->
+          <div class="reward-page" id="page-reward">
+            <div class="grand">
+              <div class="k">阶段终极大奖</div>
+              <div class="v">官方流量曝光 + ¥888 现金</div>
+              <div class="ds">完成本阶段全部小段任务，解锁下一阶段并获得专属创作者权益。</div>
+            </div>
+            <div class="rlist">
+              <div class="ritem"><div class="ri">💰</div><div><div class="rt">现金奖励 ¥888</div><div class="rs">阶段达成发放</div></div></div>
+              <div class="ritem"><div class="ri">📈</div><div><div class="rt">首页流量包</div><div class="rs">推荐位曝光 +30%</div></div></div>
+              <div class="ritem"><div class="ri">🏅</div><div><div class="rt">星手认证标</div><div class="rs">主页专属徽章</div></div></div>
+              <div class="ritem"><div class="ri">🎁</div><div><div class="rt">游戏内皮肤</div><div class="rs">限定外观礼包</div></div></div>
+            </div>
+          </div>
+
+          <!-- PROFILE PAGE -->
+          <div class="profile" id="page-profile">
+            <div class="pf-hd">
+              <div class="pf-av">创</div>
+              <div><div class="pf-nm">创作者 · 小航</div><span class="pf-tag">⭐ 星手上路 Lv.2</span></div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="n">3</div><div class="l">已发布玩法</div></div>
+              <div class="stat"><div class="n">1.2w</div><div class="l">累计游玩</div></div>
+              <div class="stat"><div class="n">4.6</div><div class="l">平均评分</div></div>
+              <div class="stat"><div class="n">6</div><div class="l">已完成任务</div></div>
+            </div>
+            <div class="grand" style="background:linear-gradient(135deg,#0a84ff,#5e9dff);box-shadow:0 14px 30px rgba(10,132,255,.3);">
+              <div class="k">下一里程碑</div>
+              <div class="v">再发布 1 个玩法 → 解锁「新星闪耀」</div>
+              <div class="ds">保持发布与优化节奏，持续解锁更高阶权益与分成加成。</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- nav -->
+      <nav class="nav">
+        <button class="active" data-page="tasks"><span class="ni">🎯</span>任务</button>
+        <button data-page="reward"><span class="ni">🎁</span>奖励</button>
+        <button data-page="profile"><span class="ni">👤</span>我的</button>
+      </nav>
+    </div>
+  </div>
+  <div class="hint">横版手游 · UGC 创作者成长任务系统 Demo　|　可切换阶段 / 页签，点击「领取」体验发奖</div>
+
+<script>
+  const STAGES = {
+    0:{title:"入驻建联",sub:"绑定官方账号，完成创作者入驻与社区建联。",pct:100,tasks:[
+      {ic:"📝",t:"提交创作者入驻申请",d:"填写资料并通过官方审核",r:"+100 星耀",st:"ok"},
+      {ic:"🔗",t:"绑定官方社群",d:"加入创作者官方频道完成建联",r:"+80 星耀",st:"ok"},
+      {ic:"📚",t:"完成新手指引学习",d:"观看 3 节 UGC 编辑器课程",r:"+120 星耀",st:"ok"},
+    ]},
+    1:{title:"星手上路",sub:"发布你的首个 UGC 玩法，完成官方建联与基础学习。",pct:50,tasks:[
+      {ic:"🛠️",t:"创建首个玩法地图",d:"使用编辑器搭建并保存草稿",r:"+150 星耀",st:"ok"},
+      {ic:"🚀",t:"发布首个玩法",d:"通过审核并正式上线",r:"+300 星耀",st:"go"},
+      {ic:"👥",t:"获得 50 次有效游玩",d:"玩法被真实玩家体验 50 次",r:"+200 星耀",st:"wait",p:64},
+      {ic:"⭐",t:"玩法评分达 4.0",d:"维持玩法体验质量",r:"+180 星耀",st:"lock"},
+    ]},
+    2:{title:"新星闪耀",sub:"打磨玩法质量，参与赛季主题创作，提升留存与口碑。",pct:0,tasks:[
+      {ic:"🔁",t:"完成一次玩法迭代",d:"根据数据优化并更新版本",r:"+260 星耀",st:"lock"},
+      {ic:"🎬",t:"产出玩法宣传视频",d:"上传 ≥30s 玩法实录",r:"+220 星耀",st:"lock"},
+      {ic:"🏆",t:"参与赛季主题征集",d:"提交符合赛季主题的玩法",r:"+400 星耀",st:"lock"},
+      {ic:"📊",t:"次日留存达 25%",d:"玩法具备稳定吸引力",r:"+300 星耀",st:"lock"},
+    ]},
+    3:{title:"王牌创作",sub:"进入高产创作者行列，开启分成加成与官方共创。",pct:0,tasks:[
+      {ic:"📦",t:"累计发布 5 个玩法",d:"持续稳定产出优质内容",r:"+600 星耀",st:"lock"},
+      {ic:"🤝",t:"达成官方共创合作",d:"与官方联合推出主题玩法",r:"+800 星耀",st:"lock"},
+      {ic:"💵",t:"开通玩法分成",d:"签署分成协议享收益",r:"分成 +5%",st:"lock"},
+    ]},
+    4:{title:"精英合伙人",sub:"顶级创作者权益，保底签约、IP 联动与专属扶持。",pct:0,tasks:[
+      {ic:"✍️",t:"签署保底创作协议",d:"获得月度保底创作收益",r:"保底签约",st:"lock"},
+      {ic:"🌐",t:"参与 IP 联动企划",d:"接入官方 IP 资源联动",r:"+2000 星耀",st:"lock"},
+      {ic:"📣",t:"成为官方推荐导师",d:"带教新人创作者",r:"分成 +10%",st:"lock"},
+    ]},
+  };
+
+  let star = 1250;
+  const claimed = new Set();
+  const grid = document.getElementById('taskGrid');
+  const toast = document.getElementById('toast');
+  const toastTxt = document.getElementById('toastTxt');
+
+  const BADGE = {ok:["可领取","b-ok"],go:["去完成","b-go"],wait:["审核中","b-wait"],lock:["未解锁","b-lock"]};
+
+  function renderStage(idx){
+    const s = STAGES[idx];
+    document.getElementById('stageTitle').textContent = s.title;
+    document.getElementById('stageSub').textContent = s.sub;
+    document.getElementById('stageBar').style.width = s.pct + '%';
+    document.getElementById('stagePct').textContent = s.pct + '%';
+    grid.innerHTML = '';
+    s.tasks.forEach((t,i)=>{
+      const key = idx+'-'+i;
+      const isClaimed = claimed.has(key);
+      const [bt,bc] = BADGE[t.st];
+      const card = document.createElement('div');
+      card.className = 'card';
+      let btn;
+      if(isClaimed) btn = '<button class="btn claimed">已领取</button>';
+      else if(t.st==='ok') btn = `<button class="btn" data-key="${key}" data-r="${t.r}">领取</button>`;
+      else if(t.st==='go') btn = '<button class="btn ghost">去完成</button>';
+      else if(t.st==='wait') btn = '<button class="btn disabled">审核中</button>';
+      else btn = '<button class="btn disabled">未解锁</button>';
+      const sub = t.p!=null ? `<div class="sbar"><i style="width:${t.p}%"></i></div>` : '';
+      card.innerHTML = `
+        <div class="top">
+          <div class="ti">${t.ic}</div>
+          <div class="tx"><div class="tt">${t.t}</div><div class="dd">${t.d}</div></div>
+          <span class="badge ${isClaimed?'b-ok':bc}">${isClaimed?'已完成':bt}</span>
+        </div>
+        ${sub}
+        <div class="crow"><span class="reward">★ ${t.r}</span>${btn}</div>`;
+      grid.appendChild(card);
+    });
+    bindClaim();
+  }
+
+  function bindClaim(){
+    grid.querySelectorAll('.btn[data-key]').forEach(b=>{
+      b.onclick = ()=>{
+        const key = b.dataset.key;
+        claimed.add(key);
+        const m = (b.dataset.r||'').match(/\d+/);
+        if(m){ star += parseInt(m[0],10); animateStar(); }
+        showToast('已领取 ' + b.dataset.r);
+        // re-render current stage
+        renderStage(curStage);
+      };
+    });
+  }
+
+  function animateStar(){
+    const el = document.getElementById('starVal');
+    el.textContent = star.toLocaleString();
+    el.style.transition='transform .25s';el.style.transform='scale(1.25)';
+    setTimeout(()=>el.style.transform='scale(1)',230);
+  }
+
+  let toastTimer;
+  function showToast(msg){
+    toastTxt.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'),1700);
+  }
+
+  // stage switching
+  let curStage = 1;
+  document.querySelectorAll('.stage').forEach(s=>{
+    s.onclick = ()=>{
+      if(s.classList.contains('lock')) { showToast('该阶段尚未解锁'); return; }
+      document.querySelectorAll('.stage').forEach(x=>x.classList.remove('active'));
+      s.classList.add('active');
+      curStage = parseInt(s.dataset.stage,10);
+      switchPage('tasks');
+      renderStage(curStage);
+    };
+  });
+
+  // nav switching
+  function switchPage(p){
+    document.getElementById('page-tasks').style.display = p==='tasks'?'flex':'none';
+    document.getElementById('page-reward').style.display = p==='reward'?'block':'none';
+    document.getElementById('page-profile').style.display = p==='profile'?'flex':'none';
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active', b.dataset.page===p));
+  }
+  document.querySelectorAll('.nav button').forEach(b=>{
+    b.onclick = ()=>switchPage(b.dataset.page);
+  });
+
+  renderStage(curStage);
+</script>
+</body>
+</html>
