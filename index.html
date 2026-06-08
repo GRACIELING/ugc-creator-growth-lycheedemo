@@ -21,7 +21,7 @@
       radial-gradient(800px 520px at 110% 120%,#20202a 0,transparent 55%),
       linear-gradient(160deg,#0c0c10,#101015);}
 
-  .device{position:relative;width:896px;height:426px;border-radius:46px;
+  .device{position:relative;width:948px;height:438px;border-radius:46px;
     background:linear-gradient(145deg,#2a2a2e,#0e0e10);padding:13px;
     box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.05) inset;}
   .device::before,.device::after{content:"";position:absolute;background:#0b0b0d;border-radius:6px;}
@@ -82,10 +82,11 @@
   .bar i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,#0a84ff,#6e5cff);transition:width .6s cubic-bezier(.4,0,.2,1);}
   .prog b{font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;}
 
+  /* TASK list */
   .tasks{flex:1;overflow-y:auto;padding:6px 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px;align-content:start;}
-  .tasks::-webkit-scrollbar{width:7px;}
-  .tasks::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14);border-radius:7px;}
-  .card{background:#fff;border:1px solid var(--line-2);border-radius:var(--r-md,18px);padding:13px 14px;
+  .tasks::-webkit-scrollbar,.reward-page::-webkit-scrollbar{width:7px;}
+  .tasks::-webkit-scrollbar-thumb,.reward-page::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14);border-radius:7px;}
+  .card{background:#fff;border:1px solid var(--line-2);border-radius:18px;padding:13px 14px;
     box-shadow:var(--shadow-s);display:flex;flex-direction:column;gap:9px;transition:.25s;}
   .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-m);}
   .card .top{display:flex;align-items:flex-start;gap:10px;}
@@ -100,8 +101,15 @@
   .b-lock{background:#f0f1f4;color:#9a9aa0;}
   .sbar{height:6px;border-radius:6px;background:#eef0f3;overflow:hidden;}
   .sbar i{display:block;height:100%;background:linear-gradient(90deg,#34c759,#5fd87d);transition:width .6s;}
-  .crow{display:flex;align-items:center;justify-content:space-between;}
-  .reward{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--amber);}
+  .crow{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .rchip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:5px 11px;border-radius:20px;line-height:1;max-width:62%;}
+  .rchip .ri{font-size:13px;flex:0 0 auto;}
+  .rchip .rt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .rc-cash{background:rgba(52,199,89,.14);color:#1f9e44;}
+  .rc-traffic{background:rgba(10,132,255,.12);color:#0a84ff;}
+  .rc-badge{background:rgba(110,92,255,.13);color:#6e5cff;}
+  .rc-skin{background:rgba(255,55,95,.12);color:#ff375f;}
+  .rc-share{background:rgba(255,159,10,.16);color:#cf7d00;}
   .btn{border:0;cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;padding:7px 15px;border-radius:11px;
     color:#fff;background:linear-gradient(140deg,#0a84ff,#3a9bff);box-shadow:0 6px 14px rgba(10,132,255,.3);transition:.2s;}
   .btn:hover{filter:brightness(1.05);transform:translateY(-1px);}
@@ -111,38 +119,58 @@
   .btn.disabled{background:#f0f1f4;color:#bcbcc2;box-shadow:none;cursor:not-allowed;}
   .btn.ghost{background:#fff;color:var(--ink-2);border:1px solid var(--line);box-shadow:none;}
 
-  /* right reward panel */
-  .reward-page{flex:1;overflow-y:auto;padding:16px 20px;display:none;}
-  .grand{border-radius:20px;padding:18px;color:#fff;position:relative;overflow:hidden;
-    background:linear-gradient(135deg,#6e5cff,#a07bff);box-shadow:0 14px 30px rgba(110,92,255,.35);}
-  .grand::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.16);}
-  .grand .k{font-size:11px;opacity:.85;font-weight:600;letter-spacing:.5px;}
-  .grand .v{font-size:22px;font-weight:800;margin-top:4px;}
-  .grand .ds{font-size:11.5px;opacity:.9;margin-top:6px;line-height:1.5;}
-  .rlist{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .ritem{background:#fff;border:1px solid var(--line-2);border-radius:15px;padding:13px;box-shadow:var(--shadow-s);display:flex;gap:10px;align-items:center;}
-  .ritem .ri{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--blue-soft);}
-  .ritem .rt{font-size:12.5px;font-weight:700;}
-  .ritem .rs{font-size:10.5px;color:var(--ink-2);margin-top:2px;}
+  /* ===== REWARD WALL (陈列墙，区别于任务清单) ===== */
+  .reward-page{flex:1;overflow-y:auto;padding:14px 20px 18px;display:none;
+    background:linear-gradient(180deg,#fafbff,#f3f1fb);}
+  .rw-head{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;margin-bottom:14px;color:#fff;
+    background:linear-gradient(135deg,#6e5cff,#9b7bff 60%,#c08bff);box-shadow:0 12px 28px rgba(110,92,255,.35);position:relative;overflow:hidden;}
+  .rw-head::after{content:"";position:absolute;right:-26px;top:-26px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.16);}
+  .rw-head .trophy{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:rgba(255,255,255,.2);}
+  .rw-head .ht{font-size:15px;font-weight:800;}
+  .rw-head .hs{font-size:11px;opacity:.9;margin-top:3px;}
+  .rw-head .hstat{margin-left:auto;text-align:right;}
+  .rw-head .hstat .n{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .rw-head .hstat .l{font-size:10.5px;opacity:.85;}
 
-  /* profile page */
-  .profile{flex:1;overflow-y:auto;padding:18px 22px;display:none;flex-direction:column;gap:14px;}
-  .pf-hd{display:flex;align-items:center;gap:14px;}
-  .pf-av{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;
-    background:linear-gradient(140deg,#6e5cff,#a07bff);box-shadow:var(--shadow-m);}
-  .pf-nm{font-size:18px;font-weight:800;}
-  .pf-tag{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;font-weight:700;color:#0a84ff;
-    background:var(--blue-soft);padding:3px 10px;border-radius:20px;}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-  .stat{background:#fff;border:1px solid var(--line-2);border-radius:15px;padding:13px;box-shadow:var(--shadow-s);text-align:center;}
-  .stat .n{font-size:19px;font-weight:800;letter-spacing:-.5px;}
-  .stat .l{font-size:10.5px;color:var(--ink-2);margin-top:3px;}
+  .rw-stage{margin-bottom:12px;}
+  .rw-stage .sh{display:flex;align-items:center;gap:8px;margin:0 2px 9px;}
+  .rw-stage .sh .si{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:13px;background:#fff;box-shadow:var(--shadow-s);}
+  .rw-stage .sh .sn{font-size:12.5px;font-weight:800;}
+  .rw-stage .sh .tag{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .tag.got{background:rgba(52,199,89,.15);color:#1f9e44;}
+  .tag.cur{background:rgba(10,132,255,.15);color:#0a84ff;}
+  .tag.lk{background:rgba(0,0,0,.06);color:#9a9aa0;}
+  .rw-stage .sh .ln{flex:1;height:1px;background:var(--line-2);}
+
+  .prizes{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;}
+  .prize{position:relative;border-radius:15px;padding:12px 8px 11px;background:#fff;border:1px solid var(--line-2);
+    box-shadow:var(--shadow-s);text-align:center;transition:.25s;overflow:hidden;}
+  .prize:hover{transform:translateY(-3px);box-shadow:var(--shadow-m);}
+  .prize .glow{position:absolute;inset:0;opacity:.1;}
+  .prize .pic{position:relative;width:42px;height:42px;margin:1px auto 7px;border-radius:13px;display:grid;place-items:center;font-size:21px;}
+  .prize .pn{position:relative;font-size:11.5px;font-weight:800;line-height:1.22;}
+  .prize .pd{position:relative;font-size:9.5px;color:var(--ink-2);margin-top:3px;line-height:1.3;}
+  .prize .ptype{position:relative;display:inline-block;margin-top:7px;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:20px;}
+  .prize .corner{position:absolute;top:7px;right:7px;font-size:10.5px;}
+  /* locked prize */
+  .prize.lock{background:#f6f6f8;border-style:dashed;}
+  .prize.lock .pic{filter:grayscale(1);opacity:.45;}
+  .prize.lock .pn,.prize.lock .pd{color:var(--ink-3);}
+  .prize.lock .ptype{background:#ececef;color:#aeaeb4;}
+  .prize.lock .corner{filter:grayscale(1);opacity:.6;}
+
+  /* color themes by reward type */
+  .t-cash .pic{background:rgba(52,199,89,.14);} .t-cash .ptype{background:rgba(52,199,89,.14);color:#1f9e44;} .t-cash .glow{background:radial-gradient(circle at 50% 0,#34c759,transparent 70%);}
+  .t-traffic .pic{background:rgba(10,132,255,.14);} .t-traffic .ptype{background:rgba(10,132,255,.14);color:#0a84ff;} .t-traffic .glow{background:radial-gradient(circle at 50% 0,#0a84ff,transparent 70%);}
+  .t-badge .pic{background:rgba(110,92,255,.14);} .t-badge .ptype{background:rgba(110,92,255,.14);color:#6e5cff;} .t-badge .glow{background:radial-gradient(circle at 50% 0,#6e5cff,transparent 70%);}
+  .t-skin .pic{background:rgba(255,55,95,.13);} .t-skin .ptype{background:rgba(255,55,95,.13);color:#ff375f;} .t-skin .glow{background:radial-gradient(circle at 50% 0,#ff375f,transparent 70%);}
+  .t-share .pic{background:rgba(255,159,10,.16);} .t-share .ptype{background:rgba(255,159,10,.16);color:#cf7d00;} .t-share .glow{background:radial-gradient(circle at 50% 0,#ff9f0a,transparent 70%);}
 
   /* bottom nav */
-  .nav{flex:0 0 auto;height:50px;display:flex;align-items:center;justify-content:space-around;padding:0 30px;
+  .nav{flex:0 0 auto;height:50px;display:flex;align-items:center;justify-content:space-around;padding:0 90px;
     background:var(--glass);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line-2);}
   .nav button{border:0;background:none;cursor:pointer;font-family:var(--font);display:flex;flex-direction:column;align-items:center;gap:2px;
-    color:var(--ink-3);font-size:10px;font-weight:600;transition:.2s;padding:4px 10px;border-radius:12px;}
+    color:var(--ink-3);font-size:10px;font-weight:600;transition:.2s;padding:4px 18px;border-radius:12px;}
   .nav button .ni{font-size:18px;line-height:1;}
   .nav button.active{color:var(--blue);}
   .nav button:hover{color:var(--ink);}
@@ -166,8 +194,8 @@
       <!-- top -->
       <div class="topbar">
         <div class="brand">
-          <div class="logo">UGC</div>
-          <div><div class="t">创作者成长</div><div class="s">Creator Journey</div></div>
+          <div class="logo">启元</div>
+          <div><div class="t">绿洲启元 · 创作者成长</div><div class="s">OASIS Creator Journey</div></div>
         </div>
         <div class="spacer"></div>
         <div class="pill"><span class="d g">★</span><b id="starVal">1,250</b></div>
@@ -178,16 +206,16 @@
       <!-- main -->
       <div class="main">
         <!-- left rail -->
-        <aside class="rail">
-          <div class="head">成长阶段</div>
-          <div class="stage done" data-stage="0"><div class="ico">🤝</div><div><div class="nm">入驻建联</div><div class="st">已完成</div></div></div>
-          <div class="stage active" data-stage="1"><div class="ico">🚀</div><div><div class="nm">星手上路</div><div class="st">进行中 · 2/4</div></div></div>
-          <div class="stage" data-stage="2"><div class="ico">✨</div><div><div class="nm">新星闪耀</div><div class="st">待开启</div></div></div>
-          <div class="stage lock" data-stage="3"><div class="ico">👑</div><div><div class="nm">王牌创作</div><div class="st">未解锁</div></div></div>
-          <div class="stage lock" data-stage="4"><div class="ico">💎</div><div><div class="nm">精英合伙人</div><div class="st">未解锁</div></div></div>
+        <aside class="rail" id="rail">
+          <div class="head">绿洲成长路线</div>
+          <div class="stage done" data-stage="0"><div class="ico">🤝</div><div><div class="nm">阶段一 · 启元入驻</div><div class="st">已完成</div></div></div>
+          <div class="stage active" data-stage="1"><div class="ico">🛠️</div><div><div class="nm">阶段二 · 工坊拓荒</div><div class="st">进行中 · 2/4</div></div></div>
+          <div class="stage" data-stage="2"><div class="ico">🌱</div><div><div class="nm">阶段三 · 绿洲新星</div><div class="st">待开启</div></div></div>
+          <div class="stage lock" data-stage="3"><div class="ico">👑</div><div><div class="nm">阶段四 · 王牌建造</div><div class="st">未解锁</div></div></div>
+          <div class="stage lock" data-stage="4"><div class="ico">💎</div><div><div class="nm">阶段五 · 启元合伙人</div><div class="st">未解锁</div></div></div>
         </aside>
 
-        <!-- center / pages -->
+        <!-- center -->
         <section class="content">
           <!-- TASKS PAGE -->
           <div id="page-tasks" style="display:flex;flex-direction:column;flex:1;min-height:0;">
@@ -199,38 +227,17 @@
             <div class="tasks" id="taskGrid"></div>
           </div>
 
-          <!-- REWARD PAGE -->
+          <!-- REWARD WALL PAGE -->
           <div class="reward-page" id="page-reward">
-            <div class="grand">
-              <div class="k">阶段终极大奖</div>
-              <div class="v">官方流量曝光 + ¥888 现金</div>
-              <div class="ds">完成本阶段全部小段任务，解锁下一阶段并获得专属创作者权益。</div>
+            <div class="rw-head">
+              <div class="trophy">🏆</div>
+              <div>
+                <div class="ht">奖励陈列馆</div>
+                <div class="hs">完成成长阶段，逐级解锁专属创作者奖励</div>
+              </div>
+              <div class="hstat"><div class="n" id="gotCount">2</div><div class="l">已获得 / 共 17 项</div></div>
             </div>
-            <div class="rlist">
-              <div class="ritem"><div class="ri">💰</div><div><div class="rt">现金奖励 ¥888</div><div class="rs">阶段达成发放</div></div></div>
-              <div class="ritem"><div class="ri">📈</div><div><div class="rt">首页流量包</div><div class="rs">推荐位曝光 +30%</div></div></div>
-              <div class="ritem"><div class="ri">🏅</div><div><div class="rt">星手认证标</div><div class="rs">主页专属徽章</div></div></div>
-              <div class="ritem"><div class="ri">🎁</div><div><div class="rt">游戏内皮肤</div><div class="rs">限定外观礼包</div></div></div>
-            </div>
-          </div>
-
-          <!-- PROFILE PAGE -->
-          <div class="profile" id="page-profile">
-            <div class="pf-hd">
-              <div class="pf-av">创</div>
-              <div><div class="pf-nm">创作者 · 小航</div><span class="pf-tag">⭐ 星手上路 Lv.2</span></div>
-            </div>
-            <div class="stats">
-              <div class="stat"><div class="n">3</div><div class="l">已发布玩法</div></div>
-              <div class="stat"><div class="n">1.2w</div><div class="l">累计游玩</div></div>
-              <div class="stat"><div class="n">4.6</div><div class="l">平均评分</div></div>
-              <div class="stat"><div class="n">6</div><div class="l">已完成任务</div></div>
-            </div>
-            <div class="grand" style="background:linear-gradient(135deg,#0a84ff,#5e9dff);box-shadow:0 14px 30px rgba(10,132,255,.3);">
-              <div class="k">下一里程碑</div>
-              <div class="v">再发布 1 个玩法 → 解锁「新星闪耀」</div>
-              <div class="ds">保持发布与优化节奏，持续解锁更高阶权益与分成加成。</div>
-            </div>
+            <div id="rewardWall"></div>
           </div>
         </section>
       </div>
@@ -239,49 +246,52 @@
       <nav class="nav">
         <button class="active" data-page="tasks"><span class="ni">🎯</span>任务</button>
         <button data-page="reward"><span class="ni">🎁</span>奖励</button>
-        <button data-page="profile"><span class="ni">👤</span>我的</button>
       </nav>
     </div>
   </div>
-  <div class="hint">横版手游 · UGC 创作者成长任务系统 Demo　|　可切换阶段 / 页签，点击「领取」体验发奖</div>
+  <div class="hint">横版手游 · UGC 创作者成长任务系统 Demo　|　左侧切阶段，底部切页签，任务页点「领取」体验发奖</div>
 
 <script>
+  // 单一数据源：每个任务挂钩一个具体奖励(rw)，奖励陈列墙由任务奖励自动生成
   const STAGES = {
-    0:{title:"入驻建联",sub:"绑定官方账号，完成创作者入驻与社区建联。",pct:100,tasks:[
-      {ic:"📝",t:"提交创作者入驻申请",d:"填写资料并通过官方审核",r:"+100 星耀",st:"ok"},
-      {ic:"🔗",t:"绑定官方社群",d:"加入创作者官方频道完成建联",r:"+80 星耀",st:"ok"},
-      {ic:"📚",t:"完成新手指引学习",d:"观看 3 节 UGC 编辑器课程",r:"+120 星耀",st:"ok"},
+    0:{title:"启元入驻",sub:"开启绿洲启元创作之旅，绑定官方身份，完成创作者建联。",pct:100,tasks:[
+      {ic:"📝",t:"提交创作者入驻申请",d:"完善资料并通过官方审核",st:"ok",star:100,rw:{ic:"🎁",n:"启元新手礼包",d:"入驻即得创作礼包",type:"cash",tn:"现金价值"}},
+      {ic:"🔗",t:"加入启元创作者社群",d:"进入官方创作频道完成建联",st:"ok",star:80,rw:{ic:"🏅",n:"创作者身份标",d:"主页专属创作者徽章",type:"badge",tn:"身份"}},
+      {ic:"📚",t:"完成启元编辑器入门",d:"学习 3 节绿洲编辑器课程",st:"ok",star:120,rw:{ic:"🧰",n:"编辑器素材包",d:"绿洲基础素材合集",type:"skin",tn:"素材"}},
     ]},
-    1:{title:"星手上路",sub:"发布你的首个 UGC 玩法，完成官方建联与基础学习。",pct:50,tasks:[
-      {ic:"🛠️",t:"创建首个玩法地图",d:"使用编辑器搭建并保存草稿",r:"+150 星耀",st:"ok"},
-      {ic:"🚀",t:"发布首个玩法",d:"通过审核并正式上线",r:"+300 星耀",st:"go"},
-      {ic:"👥",t:"获得 50 次有效游玩",d:"玩法被真实玩家体验 50 次",r:"+200 星耀",st:"wait",p:64},
-      {ic:"⭐",t:"玩法评分达 4.0",d:"维持玩法体验质量",r:"+180 星耀",st:"lock"},
+    1:{title:"工坊拓荒",sub:"踏上工坊拓荒之路，用绿洲启元编辑器造出你的首个玩法。",pct:50,tasks:[
+      {ic:"🛠️",t:"搭建首张绿洲地图",d:"在启元编辑器中搭建并保存草稿",st:"ok",star:150,rw:{ic:"🎒",n:"工坊素材礼包",d:"进阶地图素材合集",type:"skin",tn:"素材"}},
+      {ic:"🚀",t:"发布首个玩法",d:"通过审核并上线玩法大厅",st:"go",star:300,rw:{ic:"💰",n:"现金 ¥888",d:"首发玩法达成发放",type:"cash",tn:"现金"}},
+      {ic:"👥",t:"获得 50 次有效游玩",d:"玩法被真实玩家体验 50 次",st:"wait",p:64,star:200,rw:{ic:"📈",n:"绿洲流量包",d:"玩法大厅曝光 +30%",type:"traffic",tn:"流量"}},
+      {ic:"⭐",t:"玩法评分达 4.0",d:"维持绿洲玩法体验质量",st:"lock",star:180,rw:{ic:"🎖️",n:"拓荒者认证标",d:"主页专属拓荒徽章",type:"badge",tn:"身份"}},
     ]},
-    2:{title:"新星闪耀",sub:"打磨玩法质量，参与赛季主题创作，提升留存与口碑。",pct:0,tasks:[
-      {ic:"🔁",t:"完成一次玩法迭代",d:"根据数据优化并更新版本",r:"+260 星耀",st:"lock"},
-      {ic:"🎬",t:"产出玩法宣传视频",d:"上传 ≥30s 玩法实录",r:"+220 星耀",st:"lock"},
-      {ic:"🏆",t:"参与赛季主题征集",d:"提交符合赛季主题的玩法",r:"+400 星耀",st:"lock"},
-      {ic:"📊",t:"次日留存达 25%",d:"玩法具备稳定吸引力",r:"+300 星耀",st:"lock"},
+    2:{title:"绿洲新星",sub:"让你的绿洲枝繁叶茂，参与赛季主题共创，提升口碑与留存。",pct:0,tasks:[
+      {ic:"🔁",t:"完成一次玩法迭代",d:"依据数据优化并更新版本",st:"lock",star:260,rw:{ic:"💵",n:"现金 ¥1888",d:"阶段达成发放",type:"cash",tn:"现金"}},
+      {ic:"🎬",t:"产出玩法宣传短片",d:"上传 ≥30s 玩法实录",st:"lock",star:220,rw:{ic:"🎞️",n:"赛季限定外观",d:"主题创作专属皮肤",type:"skin",tn:"外观"}},
+      {ic:"🏆",t:"参与赛季主题征集",d:"提交契合赛季主题的玩法",st:"lock",star:400,rw:{ic:"🚀",n:"流量加权券",d:"7 天热门加权",type:"traffic",tn:"流量"}},
+      {ic:"📊",t:"次日留存达 25%",d:"绿洲玩法具备稳定吸引力",st:"lock",star:300,rw:{ic:"🌟",n:"新星认证标",d:"升级版主页徽章",type:"badge",tn:"身份"}},
     ]},
-    3:{title:"王牌创作",sub:"进入高产创作者行列，开启分成加成与官方共创。",pct:0,tasks:[
-      {ic:"📦",t:"累计发布 5 个玩法",d:"持续稳定产出优质内容",r:"+600 星耀",st:"lock"},
-      {ic:"🤝",t:"达成官方共创合作",d:"与官方联合推出主题玩法",r:"+800 星耀",st:"lock"},
-      {ic:"💵",t:"开通玩法分成",d:"签署分成协议享收益",r:"分成 +5%",st:"lock"},
+    3:{title:"王牌建造",sub:"跻身王牌建造师行列，解锁玩法分成与官方共创。",pct:0,tasks:[
+      {ic:"📦",t:"累计发布 5 个玩法",d:"持续稳定产出优质绿洲",st:"lock",star:600,rw:{ic:"🎧",n:"专属客服通道",d:"优先审核与支持",type:"badge",tn:"权益"}},
+      {ic:"🤝",t:"达成官方共创合作",d:"与官方联合打造主题玩法",st:"lock",star:800,rw:{ic:"💠",n:"官方共创资源",d:"联合企划与资源位",type:"traffic",tn:"资源"}},
+      {ic:"💵",t:"开通玩法分成",d:"签署分成协议享创作收益",st:"lock",star:0,rw:{ic:"💎",n:"玩法分成 +5%",d:"开通玩法收益分成",type:"share",tn:"分成"}},
     ]},
-    4:{title:"精英合伙人",sub:"顶级创作者权益，保底签约、IP 联动与专属扶持。",pct:0,tasks:[
-      {ic:"✍️",t:"签署保底创作协议",d:"获得月度保底创作收益",r:"保底签约",st:"lock"},
-      {ic:"🌐",t:"参与 IP 联动企划",d:"接入官方 IP 资源联动",r:"+2000 星耀",st:"lock"},
-      {ic:"📣",t:"成为官方推荐导师",d:"带教新人创作者",r:"分成 +10%",st:"lock"},
+    4:{title:"启元合伙人",sub:"成为启元合伙人，享保底签约、IP 联动与顶级扶持。",pct:0,tasks:[
+      {ic:"✍️",t:"签署保底创作协议",d:"获得月度保底创作收益",st:"lock",star:0,rw:{ic:"📜",n:"保底签约权益",d:"月度保底创作收益",type:"cash",tn:"签约"}},
+      {ic:"🌐",t:"参与 IP 联动企划",d:"接入官方 IP 资源共创",st:"lock",star:2000,rw:{ic:"🌐",n:"IP 联动企划",d:"接入官方 IP 资源",type:"traffic",tn:"资源"}},
+      {ic:"📣",t:"成为启元创作导师",d:"带教新人建造师",st:"lock",star:0,rw:{ic:"💸",n:"分成 +10%",d:"顶级收益分成",type:"share",tn:"分成"}},
     ]},
   };
+
+  // 阶段图标（与左侧成长路线一致），陈列墙复用
+  const STAGE_ICO = ["🤝","🛠️","🌱","👑","💎"];
+  const CN_NUM = ["一","二","三","四","五"];
 
   let star = 1250;
   const claimed = new Set();
   const grid = document.getElementById('taskGrid');
   const toast = document.getElementById('toast');
   const toastTxt = document.getElementById('toastTxt');
-
   const BADGE = {ok:["可领取","b-ok"],go:["去完成","b-go"],wait:["审核中","b-wait"],lock:["未解锁","b-lock"]};
 
   function renderStage(idx){
@@ -299,11 +309,13 @@
       card.className = 'card';
       let btn;
       if(isClaimed) btn = '<button class="btn claimed">已领取</button>';
-      else if(t.st==='ok') btn = `<button class="btn" data-key="${key}" data-r="${t.r}">领取</button>`;
+      else if(t.st==='ok') btn = `<button class="btn" data-key="${key}" data-star="${t.star}" data-rn="${t.rw.n}">领取</button>`;
       else if(t.st==='go') btn = '<button class="btn ghost">去完成</button>';
       else if(t.st==='wait') btn = '<button class="btn disabled">审核中</button>';
       else btn = '<button class="btn disabled">未解锁</button>';
       const sub = t.p!=null ? `<div class="sbar"><i style="width:${t.p}%"></i></div>` : '';
+      const r = t.rw;
+      const chip = `<span class="rchip rc-${r.type}"><span class="ri">${r.ic}</span><span class="rt">${r.n}</span></span>`;
       card.innerHTML = `
         <div class="top">
           <div class="ti">${t.ic}</div>
@@ -311,22 +323,57 @@
           <span class="badge ${isClaimed?'b-ok':bc}">${isClaimed?'已完成':bt}</span>
         </div>
         ${sub}
-        <div class="crow"><span class="reward">★ ${t.r}</span>${btn}</div>`;
+        <div class="crow">${chip}${btn}</div>`;
       grid.appendChild(card);
     });
     bindClaim();
   }
 
+  function renderRewards(){
+    const wall = document.getElementById('rewardWall');
+    const STAG_TAG = {got:["已获得","got"],cur:["进行中","cur"],lk:["未解锁","lk"]};
+    let totalGot = 0, total = 0, html = '';
+    for(let idx=0; idx<5; idx++){
+      const s = STAGES[idx];
+      const state = s.pct===100 ? 'got' : (s.pct>0 ? 'cur' : 'lk');
+      const [tt,tc] = STAG_TAG[state];
+      const cards = s.tasks.map((t,i)=>{
+        total++;
+        const r = t.rw;
+        const isGot = state==='got' || claimed.has(idx+'-'+i);
+        if(isGot) totalGot++;
+        const locked = state==='lk' && !isGot;
+        const corner = isGot ? "✅" : (locked ? "🔒" : "🎁");
+        return `<div class="prize t-${r.type} ${locked?'lock':''}">
+          <span class="glow"></span>
+          <span class="corner">${corner}</span>
+          <div class="pic">${r.ic}</div>
+          <div class="pn">${r.n}</div>
+          <div class="pd">${r.d}</div>
+          <span class="ptype">${r.tn}</span>
+        </div>`;
+      }).join('');
+      html += `<div class="rw-stage">
+        <div class="sh"><span class="si">${STAGE_ICO[idx]}</span><span class="sn">阶段${CN_NUM[idx]} · ${s.title}</span>
+          <span class="tag ${tc}">${tt}</span><span class="ln"></span></div>
+        <div class="prizes">${cards}</div>
+      </div>`;
+    }
+    wall.innerHTML = html;
+    document.getElementById('gotCount').textContent = totalGot;
+    const hl = document.querySelector('.rw-head .hstat .l');
+    if(hl) hl.textContent = '已获得 / 共 ' + total + ' 项';
+  }
+
   function bindClaim(){
     grid.querySelectorAll('.btn[data-key]').forEach(b=>{
       b.onclick = ()=>{
-        const key = b.dataset.key;
-        claimed.add(key);
-        const m = (b.dataset.r||'').match(/\d+/);
-        if(m){ star += parseInt(m[0],10); animateStar(); }
-        showToast('已领取 ' + b.dataset.r);
-        // re-render current stage
+        claimed.add(b.dataset.key);
+        const inc = parseInt(b.dataset.star||'0',10);
+        if(inc){ star += inc; animateStar(); }
+        showToast('已领取 ' + b.dataset.rn);
         renderStage(curStage);
+        renderRewards();
       };
     });
   }
@@ -363,14 +410,13 @@
   function switchPage(p){
     document.getElementById('page-tasks').style.display = p==='tasks'?'flex':'none';
     document.getElementById('page-reward').style.display = p==='reward'?'block':'none';
-    document.getElementById('page-profile').style.display = p==='profile'?'flex':'none';
+    document.getElementById('rail').style.display = p==='tasks'?'flex':'none';
     document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active', b.dataset.page===p));
   }
-  document.querySelectorAll('.nav button').forEach(b=>{
-    b.onclick = ()=>switchPage(b.dataset.page);
-  });
+  document.querySelectorAll('.nav button').forEach(b=>{ b.onclick = ()=>switchPage(b.dataset.page); });
 
   renderStage(curStage);
+  renderRewards();
 </script>
 </body>
 </html>
