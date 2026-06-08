@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UGC 创作者成长激励体系 · 立项介绍与能力评估</title>
+<style>
+  :root{
+    --ink:#1d1d1f;--ink-2:#5b5b61;--ink-3:#8a8a90;
+    --line:rgba(0,0,0,.08);--line-2:rgba(0,0,0,.05);
+    --blue:#0a84ff;--blue-soft:#eaf3ff;--green:#1f9e44;--green-soft:#e9f9ee;
+    --amber:#cf7d00;--amber-soft:#fff4e2;--purple:#6e5cff;--purple-soft:#efecff;
+    --pink:#ff375f;--pink-soft:#ffe9ef;--red:#e0352b;--red-soft:#fdecea;
+    --bg:#f5f6f9;--card:#fff;
+    --shadow-s:0 1px 2px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.06);
+    --shadow-m:0 12px 36px rgba(0,0,0,.1);
+    --font:-apple-system,"SF Pro Display","PingFang SC","Helvetica Neue",system-ui,sans-serif;
+    --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;color:var(--ink);font-family:var(--font);line-height:1.6;
+    background:
+      radial-gradient(1100px 480px at 88% -6%,#eef0ff 0,transparent 55%),
+      radial-gradient(900px 420px at -8% 8%,#eaf6ff 0,transparent 50%),
+      var(--bg);}
+
+  /* layout */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px;}
+  .nav-top{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(18px);
+    background:rgba(255,255,255,.78);border-bottom:1px solid var(--line-2);}
+  .nav-in{max-width:1080px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .nav-in .lg{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;
+    background:linear-gradient(140deg,#0a84ff,#6e5cff);box-shadow:0 4px 12px rgba(10,132,255,.32);}
+  .nav-in .tt{font-weight:800;font-size:14.5px;letter-spacing:-.2px;}
+  .nav-in .menu{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;}
+  .nav-in .menu a{font-size:12.5px;font-weight:600;color:var(--ink-2);text-decoration:none;padding:6px 11px;border-radius:9px;transition:.2s;}
+  .nav-in .menu a:hover{background:var(--blue-soft);color:var(--blue);}
+
+  /* hero */
+  .hero{padding:52px 0 30px;}
+  .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--purple);
+    background:var(--purple-soft);padding:5px 12px;border-radius:30px;}
+  h1{font-size:38px;line-height:1.18;letter-spacing:-.8px;margin:16px 0 12px;font-weight:850;}
+  h1 .g{background:linear-gradient(120deg,#0a84ff,#6e5cff 60%,#ff375f);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lead{font-size:16px;color:var(--ink-2);max-width:760px;}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+  .meta .m{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 15px;box-shadow:var(--shadow-s);}
+  .meta .m b{display:block;font-size:11px;color:var(--ink-3);font-weight:700;letter-spacing:.3px;}
+  .meta .m span{font-size:14px;font-weight:800;}
+  .cta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;}
+  .cta a{text-decoration:none;font-size:13.5px;font-weight:700;padding:11px 20px;border-radius:12px;transition:.2s;}
+  .cta .p{color:#fff;background:linear-gradient(140deg,#0a84ff,#3a9bff);box-shadow:0 8px 18px rgba(10,132,255,.32);}
+  .cta .p:hover{transform:translateY(-1px);filter:brightness(1.05);}
+  .cta .s{color:var(--ink);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-s);}
+  .cta .s:hover{transform:translateY(-1px);}
+
+  /* section */
+  section{margin-top:46px;scroll-margin-top:70px;}
+  .sh{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;}
+  .sh .no{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--purple);background:var(--purple-soft);
+    padding:3px 9px;border-radius:8px;}
+  .sh h2{font-size:23px;font-weight:820;letter-spacing:-.4px;margin:0;}
+  .sh .ds{font-size:13px;color:var(--ink-3);margin-left:auto;text-align:right;max-width:46%;}
+
+  .grid{display:grid;gap:14px;}
+  .g2{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr;}.sh .ds{display:none;}h1{font-size:30px;}}
+
+  .card{background:var(--card);border:1px solid var(--line-2);border-radius:17px;padding:18px 19px;box-shadow:var(--shadow-s);transition:.22s;}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-m);}
+  .card .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:11px;background:var(--blue-soft);}
+  .card h3{margin:0 0 6px;font-size:15.5px;font-weight:800;}
+  .card p{margin:0;font-size:13px;color:var(--ink-2);}
+  .card ul{margin:9px 0 0;padding-left:17px;font-size:12.5px;color:var(--ink-2);}
+  .card ul li{margin:3px 0;}
+
+  /* role decision cards */
+  .role{border-left:4px solid var(--blue);}
+  .role.boss{border-color:#6e5cff;} .role.op{border-color:#0a84ff;}
+  .role.prod{border-color:#1f9e44;} .role.dev{border-color:#cf7d00;}
+  .role.fin{border-color:#ff375f;} .role.legal{border-color:#e0352b;}
+  .role .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:9px;}
+  .role.boss .tag{background:var(--purple-soft);color:var(--purple);}
+  .role.op .tag{background:var(--blue-soft);color:var(--blue);}
+  .role.prod .tag{background:var(--green-soft);color:var(--green);}
+  .role.dev .tag{background:var(--amber-soft);color:var(--amber);}
+  .role.fin .tag{background:var(--pink-soft);color:var(--pink);}
+  .role.legal .tag{background:var(--red-soft);color:var(--red);}
+  .role .q{font-size:12px;color:var(--ink-3);font-style:italic;margin:8px 0 0;}
+
+  /* stage flow */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  @media(max-width:860px){.flow{grid-template-columns:1fr 1fr;}}
+  .step{background:var(--card);border:1px solid var(--line-2);border-radius:15px;padding:15px 13px;box-shadow:var(--shadow-s);position:relative;overflow:hidden;}
+  .step .si{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;margin-bottom:9px;
+    background:linear-gradient(140deg,#0a84ff,#6e5cff);color:#fff;}
+  .step .sn{font-size:10.5px;color:var(--ink-3);font-weight:700;}
+  .step h4{margin:2px 0 6px;font-size:14px;font-weight:800;}
+  .step p{margin:0;font-size:11.5px;color:var(--ink-2);}
+  .step .rw{margin-top:9px;font-size:11px;font-weight:700;color:var(--green);background:var(--green-soft);display:inline-block;padding:3px 9px;border-radius:20px;}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-s);}
+  .tbl th{background:#f7f8fb;text-align:left;padding:11px 13px;font-weight:800;color:var(--ink-2);font-size:11.5px;border-bottom:1px solid var(--line-2);}
+  .tbl td{padding:11px 13px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top;}
+  .tbl tr:last-child td{border-bottom:0;}
+  .tbl tr:hover td{background:#fafbff;}
+  .tbl .pri{font-weight:800;color:var(--ink);}
+  .chip{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .c-cash{background:var(--green-soft);color:var(--green);}
+  .c-traffic{background:var(--blue-soft);color:var(--blue);}
+  .c-badge{background:var(--purple-soft);color:var(--purple);}
+  .c-skin{background:var(--pink-soft);color:var(--pink);}
+  .c-share{background:var(--amber-soft);color:var(--amber);}
+  .c-h{background:var(--red-soft);color:var(--red);} .c-m{background:var(--amber-soft);color:var(--amber);} .c-l{background:var(--green-soft);color:var(--green);}
+
+  /* checklist */
+  .check{background:var(--card);border:1px solid var(--line-2);border-radius:15px;padding:16px 18px;box-shadow:var(--shadow-s);}
+  .check h3{margin:0 0 6px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;}
+  .check h3 .e{font-size:18px;}
+  .check ul{margin:8px 0 0;padding-left:0;list-style:none;}
+  .check li{font-size:12.8px;color:var(--ink-2);padding:5px 0 5px 24px;position:relative;border-top:1px solid var(--line-2);}
+  .check li:first-child{border-top:0;}
+  .check li::before{content:"";position:absolute;left:2px;top:11px;width:13px;height:13px;border-radius:4px;border:2px solid var(--ink-3);opacity:.5;}
+  .check li b{color:var(--ink);}
+  .owner{float:right;font-size:10px;font-weight:700;color:var(--ink-3);background:#f2f3f6;padding:2px 7px;border-radius:6px;}
+
+  .callout{border-radius:15px;padding:15px 18px;font-size:13px;display:flex;gap:12px;align-items:flex-start;}
+  .callout.warn{background:var(--amber-soft);border:1px solid rgba(255,159,10,.3);color:#7a5200;}
+  .callout.risk{background:var(--red-soft);border:1px solid rgba(224,53,43,.25);color:#8a1c16;}
+  .callout.ok{background:var(--green-soft);border:1px solid rgba(31,158,68,.25);color:#11622c;}
+  .callout .e{font-size:20px;line-height:1;}
+  .callout b{font-weight:800;}
+
+  .phase{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:860px){.phase{grid-template-columns:1fr 1fr;}}
+  .phase .p{background:var(--card);border:1px solid var(--line-2);border-radius:14px;padding:15px;box-shadow:var(--shadow-s);}
+  .phase .p .t{font-size:11px;font-weight:800;color:var(--purple);letter-spacing:.3px;}
+  .phase .p h4{margin:5px 0 7px;font-size:14.5px;}
+  .phase .p ul{margin:0;padding-left:16px;font-size:11.8px;color:var(--ink-2);}
+  .phase .p .wk{margin-top:9px;font-size:10.5px;font-weight:700;color:var(--ink-3);}
+
+  footer{margin-top:54px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12px;text-align:center;}
+  footer a{color:var(--blue);text-decoration:none;}
+  .tx-c{text-align:center;}
+</style>
+</head>
+<body>
+  <div class="nav-top">
+    <div class="nav-in">
+      <div class="lg">启元</div>
+      <div class="tt">UGC 创作者成长激励体系 · 立项介绍</div>
+      <div class="menu">
+        <a href="#why">为什么做</a>
+        <a href="#what">是什么</a>
+        <a href="#roles">各角色决策</a>
+        <a href="#reward">奖金体系</a>
+        <a href="#cap">能力清单</a>
+        <a href="#risk">风险</a>
+        <a href="#plan">排期成本</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <header class="hero">
+      <span class="kicker">⭐ 内部立项评估文档 · v1.0</span>
+      <h1>用一套「成长任务 + 阶梯奖励」体系，<br><span class="g">把 UGC 创作者从入驻一路养成合伙人</span></h1>
+      <p class="lead">本文档基于已上线的交互 Demo，面向老板、运营、产品、研发、财务与法务等不同角色，说明这个功能<b>做什么、能带来什么、需要准备哪些能力</b>，帮助快速判断「是否立项」以及「立项后要补齐什么」。</p>
+      <div class="meta">
+        <div class="m"><b>产品形态</b><span>横版手游内嵌成长中心</span></div>
+        <div class="m"><b>核心机制</b><span>5 阶段 · 17 任务 · 5 类奖励</span></div>
+        <div class="m"><b>目标</b><span>UGC 产能 · 留存 · 内容生态</span></div>
+        <div class="m"><b>当前状态</b><span>可交互 Demo 已上线</span></div>
+      </div>
+      <div class="cta">
+        <a class="p" href="https://gracieling.github.io/ugc-creator-growth-lycheedemo/" target="_blank">▶ 打开交互 Demo</a>
+        <a class="s" href="#roles">跳到「各角色怎么看」</a>
+      </div>
+    </header>
+
+    <!-- WHY -->
+    <section id="why">
+      <div class="sh"><span class="no">01</span><h2>为什么要做这件事</h2>
+        <span class="ds">从「散点激励」到「体系化养成」，让创作者愿意来、留得住、产得出。</span></div>
+      <div class="grid g3">
+        <div class="card"><div class="ic" style="background:var(--pink-soft)">📉</div>
+          <h3>现状痛点</h3>
+          <p>UGC 创作者缺乏清晰成长路径，激励零散、反馈延迟，新人入驻后高流失，头部缺乏长期绑定。</p></div>
+        <div class="card"><div class="ic" style="background:var(--green-soft)">🎯</div>
+          <h3>这套体系解决</h3>
+          <p>把「入驻→产出→优质→分成→合伙」拆成可见阶梯，每步都有即时奖励与明确目标，形成正向循环。</p></div>
+        <div class="card"><div class="ic" style="background:var(--purple-soft)">📈</div>
+          <h3>预期价值</h3>
+          <p>提升创作者次留与长留、提高优质玩法产能、沉淀内容生态，反哺主游戏 DAU 与时长。</p></div>
+      </div>
+    </section>
+
+    <!-- WHAT -->
+    <section id="what">
+      <div class="sh"><span class="no">02</span><h2>这个功能是什么</h2>
+        <span class="ds">一条 5 阶段成长主线，每个任务挂钩一份具体奖励，任务页是「怎么拿」，奖励墙是「拿到了什么」。</span></div>
+      <div class="flow">
+        <div class="step"><div class="si">🤝</div><div class="sn">阶段一</div><h4>启元入驻</h4><p>资料审核、社群建联、编辑器入门</p><span class="rw">新手礼包 · 身份标</span></div>
+        <div class="step"><div class="si">🛠️</div><div class="sn">阶段二</div><h4>工坊拓荒</h4><p>搭图、首发玩法、游玩量、评分</p><span class="rw">现金 ¥888 · 流量包</span></div>
+        <div class="step"><div class="si">🌱</div><div class="sn">阶段三</div><h4>绿洲新星</h4><p>迭代、宣传片、赛季征集、留存</p><span class="rw">现金 ¥1888 · 限定外观</span></div>
+        <div class="step"><div class="si">👑</div><div class="sn">阶段四</div><h4>王牌建造</h4><p>持续产出、官方共创、开通分成</p><span class="rw">玩法分成 +5%</span></div>
+        <div class="step"><div class="si">💎</div><div class="sn">阶段五</div><h4>启元合伙人</h4><p>保底签约、IP 联动、带教导师</p><span class="rw">保底签约 · 分成 +10%</span></div>
+      </div>
+      <div class="grid g2" style="margin-top:14px">
+        <div class="card"><div class="ic">🎯</div><h3>任务系统（底层引擎）</h3>
+          <p>每个任务有<b>状态机</b>：未解锁 → 去完成 → 审核中 → 可领取 → 已领取。状态由真实游戏行为/数据驱动。</p>
+          <ul><li>事件型：入驻审核通过、玩法发布、签署协议</li><li>累计型：有效游玩 50 次、累计发布 5 个玩法</li><li>指标型：评分 ≥4.0、次留 ≥25%（需数据回流）</li></ul></div>
+        <div class="card"><div class="ic" style="background:var(--green-soft)">🎁</div><h3>奖励系统（5 类）</h3>
+          <p>任务与奖励<b>单一数据源</b>，永不脱节。五类奖励对应不同成本与审批链路：</p>
+          <ul>
+            <li><span class="chip c-cash">现金</span> 直接现金/礼包，涉及财务与税务</li>
+            <li><span class="chip c-traffic">流量</span> 曝光加权、热门位，平台资源</li>
+            <li><span class="chip c-skin">外观/素材</span> 道具皮肤，需美术与发放</li>
+            <li><span class="chip c-badge">身份/权益</span> 徽章、客服通道，低成本</li>
+            <li><span class="chip c-share">分成</span> 玩法收益分成，涉及合同</li>
+          </ul></div>
+      </div>
+    </section>
+
+    <!-- ROLES -->
+    <section id="roles">
+      <div class="sh"><span class="no">03</span><h2>各角色怎么看「要不要上」</h2>
+        <span class="ds">每个角色的关注点、决策依据，以及需要他们回答的关键问题。</span></div>
+      <div class="grid g3">
+        <div class="card role boss"><span class="tag">老板 / 决策层</span>
+          <h3>看 ROI 与战略卡位</h3>
+          <p>UGC 生态是长期护城河，这套体系决定能否低成本撬动创作者产能。</p>
+          <p class="q">要回答：投入多少预算？多久看到产能/留存提升？与竞品差距？</p></div>
+        <div class="card role op"><span class="tag">运营</span>
+          <h3>看可运营性与活跃</h3>
+          <p>阶段任务=天然运营抓手，可叠加赛季主题、榜单、活动。</p>
+          <p class="q">要回答：奖品库怎么排？赛季节奏？头部如何精细化运营？</p></div>
+        <div class="card role prod"><span class="tag">产品</span>
+          <h3>看体验与转化漏斗</h3>
+          <p>关注各阶段流失点、领奖体验、任务难度曲线是否合理。</p>
+          <p class="q">要回答：任务门槛设多高？审核时效？如何防止半途流失？</p></div>
+        <div class="card role dev"><span class="tag">研发 / 技术</span>
+          <h3>看可实现性与数据回流</h3>
+          <p>核心是任务状态机 + 数据埋点回流 + 奖励发放的对账一致性。</p>
+          <p class="q">要回答：指标型任务的数据从哪来？发奖幂等？审核系统对接？</p></div>
+        <div class="card role fin"><span class="tag">财务</span>
+          <h3>看预算与税务合规</h3>
+          <p>现金/分成是真实支出，需预算池、代扣代缴、对账与限额兜底。</p>
+          <p class="q">要回答：奖金池上限？个税代扣？发放渠道与凭证？</p></div>
+        <div class="card role legal"><span class="tag">法务 / 合规</span>
+          <h3>看协议与版权风险</h3>
+          <p>分成/签约需合同，UGC 内容涉及版权、未成年人与活动规则合规。</p>
+          <p class="q">要回答：分成协议模板？UGC 版权归属？活动规则与公示？</p></div>
+      </div>
+    </section>
+
+    <!-- REWARD -->
+    <section id="reward">
+      <div class="sh"><span class="no">04</span><h2>奖金 / 奖励体系明细</h2>
+        <span class="ds">基于 Demo 实际配置，列出奖励类型、成本属性、责任方与需准备的能力。</span></div>
+      <table class="tbl">
+        <thead><tr><th>奖励类型</th><th>Demo 示例</th><th>成本</th><th>主要责任方</th><th>需准备的能力</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-cash">现金</span></td><td class="pri">¥888 / ¥1888 / 新手礼包</td><td><span class="chip c-h">高</span></td><td>财务 + 运营</td><td>奖金池预算、发放渠道、个税代扣代缴、发放凭证与对账</td></tr>
+          <tr><td><span class="chip c-share">分成</span></td><td class="pri">玩法分成 +5% / +10% / 保底签约</td><td><span class="chip c-h">高·持续</span></td><td>财务 + 法务</td><td>分成协议模板、收益核算、月度结算、合同签署与归档</td></tr>
+          <tr><td><span class="chip c-traffic">流量</span></td><td class="pri">曝光 +30% / 热门加权 / 资源位</td><td><span class="chip c-m">中</span></td><td>平台 + 运营</td><td>推荐位/加权能力、流量配额管理、防滥用规则</td></tr>
+          <tr><td><span class="chip c-skin">外观/素材</span></td><td class="pri">赛季限定外观 / 编辑器素材包</td><td><span class="chip c-m">中</span></td><td>美术 + 研发</td><td>道具产出排期、发放系统、库存与防重发</td></tr>
+          <tr><td><span class="chip c-badge">身份/权益</span></td><td class="pri">认证徽章 / 专属客服通道</td><td><span class="chip c-l">低</span></td><td>产品 + 客服</td><td>徽章体系、客服分层、权益生效逻辑</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn" style="margin-top:14px"><span class="e">⚠️</span>
+        <div><b>奖金池必须设上限与兜底。</b>现金与分成是真实持续支出，建议设置月度/赛季奖金池上限、单人封顶、异常熔断，并预留 10~15% 浮动预算应对超额发放。</div></div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section id="cap">
+      <div class="sh"><span class="no">05</span><h2>需要准备的能力清单</h2>
+        <span class="ds">除了奖金和任务系统，这些是容易被忽略但上线前必须就位的能力。</span></div>
+      <div class="grid g2">
+        <div class="check"><h3><span class="e">🎯</span>底层任务系统<span class="owner">研发</span></h3>
+          <ul>
+            <li><b>任务状态机引擎</b>：未解锁/去完成/审核中/可领取/已领取流转</li>
+            <li><b>任务配置后台</b>：运营可配阶段、任务、门槛、奖励，无需发版</li>
+            <li><b>进度计算</b>：累计型/指标型任务的实时进度与达成判定</li>
+            <li><b>解锁依赖</b>：阶段间前置关系与解锁触发</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">📊</span>数据埋点与回流<span class="owner">数据/研发</span></h3>
+          <ul>
+            <li><b>行为埋点</b>：发布、游玩次数、评分、留存等可采集</li>
+            <li><b>指标计算</b>：次留 25%、评分 4.0 等需稳定数据管道</li>
+            <li><b>数据时延</b>：明确 T+0/T+1，影响「审核中→可领取」时效</li>
+            <li><b>归因防刷</b>：有效游玩定义、去重、异常流量过滤</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">💰</span>奖励发放与对账<span class="owner">研发/财务</span></h3>
+          <ul>
+            <li><b>发放幂等</b>：防重复发奖，领取去重（每任务每人一次）</li>
+            <li><b>多类型发放</b>：现金/道具/流量/权益统一发放网关</li>
+            <li><b>对账一致性</b>：发放记录与财务/库存对账，可追溯</li>
+            <li><b>限额与熔断</b>：奖金池上限、单人封顶、异常告警</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">🛡️</span>风控与反作弊<span class="owner">安全/风控</span></h3>
+          <ul>
+            <li><b>刷量识别</b>：机器游玩、小号互刷、虚假评分识别</li>
+            <li><b>内容反作弊</b>：抄袭/搬运玩法识别，重复内容判定</li>
+            <li><b>账号风控</b>：实名、设备指纹、黑名单</li>
+            <li><b>申诉与回收</b>：违规奖励冻结、追回机制</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">🔍</span>内容审核<span class="owner">审核/运营</span></h3>
+          <ul>
+            <li><b>玩法审核</b>：上线前合规与质量审核（机审+人审）</li>
+            <li><b>审核时效 SLA</b>：直接影响「审核中」任务体验</li>
+            <li><b>UGC 内容安全</b>：涉政/涉黄/侵权过滤</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">⚖️</span>财务·税务·法务<span class="owner">财务/法务</span></h3>
+          <ul>
+            <li><b>个税代扣代缴</b>：现金/分成的税务处理与凭证</li>
+            <li><b>分成与签约合同</b>：模板、签署、归档、结算</li>
+            <li><b>UGC 版权归属</b>：创作内容权属约定</li>
+            <li><b>活动规则公示</b>：规则、有效期、争议处理合规</li>
+            <li><b>未成年人保护</b>：参与门槛与提现限制</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">🎨</span>奖品供给与运营<span class="owner">运营/美术</span></h3>
+          <ul>
+            <li><b>奖品库存</b>：外观/素材的持续产出排期</li>
+            <li><b>赛季节奏</b>：阶段任务与赛季主题联动</li>
+            <li><b>头部精细化运营</b>：合伙人/导师的人工对接</li>
+          </ul></div>
+        <div class="check"><h3><span class="e">🎧</span>客服与申诉<span class="owner">客服</span></h3>
+          <ul>
+            <li><b>分层客服</b>：王牌/合伙人专属客服通道落地</li>
+            <li><b>领奖问题处理</b>：未到账、审核异常的工单流程</li>
+            <li><b>争议仲裁</b>：分成、违规回收的申诉处理</li>
+          </ul></div>
+      </div>
+      <div class="callout ok" style="margin-top:14px"><span class="e">✅</span>
+        <div><b>最小可行版本（MVP）建议：</b>先上「入驻+工坊」两个阶段，奖励以<b>身份/外观/小额现金</b>为主，验证数据回流与发放链路跑通后，再开放「分成/合伙人」等高成本、高合规要求的高阶能力。</div></div>
+    </section>
+
+    <!-- RISK -->
+    <section id="risk">
+      <div class="sh"><span class="no">06</span><h2>主要风险与应对</h2>
+        <span class="ds">立项前需让决策层明确知晓的风险点。</span></div>
+      <table class="tbl">
+        <thead><tr><th>风险</th><th>等级</th><th>说明</th><th>应对</th></tr></thead>
+        <tbody>
+          <tr><td class="pri">奖金超支</td><td><span class="chip c-h">高</span></td><td>现金/分成无上限会失控</td><td>奖金池封顶 + 单人限额 + 异常熔断</td></tr>
+          <tr><td class="pri">刷量套利</td><td><span class="chip c-h">高</span></td><td>小号互刷骗取现金奖励</td><td>风控反作弊 + 有效行为定义 + 实名</td></tr>
+          <tr><td class="pri">数据回流不准</td><td><span class="chip c-m">中</span></td><td>指标型任务依赖数据管道</td><td>先验证数据稳定性，门槛可灰度</td></tr>
+          <tr><td class="pri">审核成为瓶颈</td><td><span class="chip c-m">中</span></td><td>审核慢导致体验差、投诉</td><td>机审优先 + SLA + 审核人力预估</td></tr>
+          <tr><td class="pri">税务/合规</td><td><span class="chip c-h">高</span></td><td>现金分成涉税与合同合规</td><td>提前对齐财法，模板先行</td></tr>
+          <tr><td class="pri">内容版权纠纷</td><td><span class="chip c-m">中</span></td><td>搬运/抄袭引发争议</td><td>版权约定 + 查重 + 申诉机制</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PLAN -->
+    <section id="plan">
+      <div class="sh"><span class="no">07</span><h2>建议分期与粗粒度排期</h2>
+        <span class="ds">按风险与成本递进，分四期落地（周期为粗估，需结合团队资源细化）。</span></div>
+      <div class="phase">
+        <div class="p"><div class="t">PHASE 1 · MVP</div><h4>入驻 + 工坊</h4>
+          <ul><li>任务状态机</li><li>基础埋点回流</li><li>身份/外观奖励</li><li>配置后台 v1</li></ul>
+          <div class="wk">约 4~6 周</div></div>
+        <div class="p"><div class="t">PHASE 2</div><h4>现金 + 风控</h4>
+          <ul><li>小额现金发放</li><li>反作弊接入</li><li>奖金池限额</li><li>财务对账</li></ul>
+          <div class="wk">约 4~5 周</div></div>
+        <div class="p"><div class="t">PHASE 3</div><h4>新星 + 赛季</h4>
+          <ul><li>指标型任务</li><li>赛季主题联动</li><li>流量加权</li><li>榜单运营</li></ul>
+          <div class="wk">约 5~6 周</div></div>
+        <div class="p"><div class="t">PHASE 4</div><h4>分成 + 合伙人</h4>
+          <ul><li>分成结算</li><li>签约合同流程</li><li>税务代扣</li><li>专属客服</li></ul>
+          <div class="wk">约 6~8 周</div></div>
+      </div>
+      <div class="callout risk" style="margin-top:14px"><span class="e">🚦</span>
+        <div><b>立项决策建议：</b>先批准 Phase 1+2（验证产能与留存 + 跑通发放风控），用真实数据复盘 ROI 后，再决定是否投入 Phase 3+4 的高成本高合规能力。这样把大额预算与合规风险后置，降低试错成本。</div></div>
+    </section>
+
+    <footer>
+      <p>UGC 创作者成长激励体系 · 立项介绍与能力评估 v1.0 · 基于交互 Demo 整理</p>
+      <p>交互 Demo：<a href="https://gracieling.github.io/ugc-creator-growth-lycheedemo/" target="_blank">gracieling.github.io/ugc-creator-growth-lycheedemo</a></p>
+    </footer>
+  </div>
+</body>
+</html>
